@@ -8,10 +8,11 @@ import OtpInput from "react-otp-input";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 
+import Something from "./pages/Something";
 import "./globals.css";
 export default function Home() {
   const [isDarkMode, setDarkMode] = useState(false);
-  const [phone,setPhone]= useState("")
+  const [phone, setPhone] = useState("");
   const toggleDarkMode = () => {
     setDarkMode(!isDarkMode);
   };
@@ -20,6 +21,7 @@ export default function Home() {
     <div className={`${isDarkMode === true ? "dark" : "light"}`}>
       <div className="bg-green-600 w-screen h-screen flex justify-center items-center dark:bg-green-950">
         <div className="flex justify-center items-center flex-col">
+          <Something />
           <DarkModeSwitch
             style={{ marginBottom: "2rem" }}
             checked={isDarkMode}
@@ -35,18 +37,15 @@ export default function Home() {
               <BsShieldLockFill size={50} />
             </p>
             <div className="ml-10 m-10">
-            <PhoneInput
+              <PhoneInput
                 country={"ir"}
                 value={phone}
                 onChange={setPhone}
                 autoFormat={true}
               />
-
             </div>
 
             <div className="ml-[130px] border-rose-950 ">
-              
-
               <OtpInput
                 value={otp}
                 onChange={setOtp}
