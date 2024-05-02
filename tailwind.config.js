@@ -8,10 +8,11 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        'day': "url('../public/day.jpg')",
-        'night': "url('../public/night.jpg')",
+        day: "url('../public/day.jpg')",
+        night: "url('../public/night.jpg')",
       },
     },
   },
-  plugins: [],darkMode:'class'
+  plugins: [],
+  darkMode: "class",
 };

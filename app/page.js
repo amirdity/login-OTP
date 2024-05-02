@@ -4,12 +4,9 @@ import { DarkModeSwitch } from "react-toggle-dark-mode";
 import { useState } from "react";
 import { BsShieldLockFill } from "react-icons/bs";
 import OtpInput from "react-otp-input";
-// PHONE INPUT
-import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
-
 import "./globals.css";
-import RegisterPhone from "./components/RegisterPhone";
+import RegisterPhone from "./components/RegisterPhone/RegisterPhone";
+import OTP from "./components/OTP";
 export default function Home() {
   const [isDarkMode, setDarkMode] = useState(false);
   const [phone, setPhone] = useState("");
@@ -21,7 +18,7 @@ export default function Home() {
   return (
     <div className={`${isDarkMode === true ? "dark" : "light"}`}>
       <div className=" w-screen h-screen flex justify-center items-center dark:bg-green-950 bg-day dark:bg-night bg-center bg-cover ">
-        <div className="flex justify-center items-center flex-col backdrop-blur-sm p-10">
+        <div className="flex justify-center items-center flex-col backdrop-blur backdrop-brightness-125 p-10 rounded-3xl bg-white/30 dark:bg-white/5">
           <DarkModeSwitch
             style={{ marginBottom: "2rem" }}
             checked={isDarkMode}
@@ -41,13 +38,7 @@ export default function Home() {
             </div>
 
             <div className="ml-[130px] border-rose-950 ">
-              <OtpInput
-                value={otp}
-                onChange={setOtp}
-                numInputs={6}
-                renderSeparator={<span> &nbsp; </span>}
-                renderInput={(props) => <input {...props} />}
-              />
+              <OTP />
             </div>
           </div>
         </div>
