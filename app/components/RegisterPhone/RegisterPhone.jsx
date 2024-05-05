@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import "./RegisterPhone.css";
@@ -9,13 +9,11 @@ function RegisterPhone() {
   const [button, setButton] = useState(true);
 
   function Axios() {
-    // setPhone(phone);
-    const sendOtpUrl = "http://192.168.8.100:4003/auth/login-send-otp";
+    setButton(false);
+    const sendOtpUrl = "http://192.168.8.102:4003/auth/login-send-otp";
     const api = { mobile: `+${phone}` };
-
     console.log(phone);
     console.log(api);
-
     axios
       .post(sendOtpUrl, api)
       .then((res) => {
@@ -24,11 +22,11 @@ function RegisterPhone() {
           console.log(res.data.message) &
           handleClick(res.data.message);
       })
-      .catch((err) => console.log(err) & alert("شماره مبایل معتبر نیست"));
+      .catch(
+        (err) =>
+          console.log(err) & alert("شماره مبایل معتبر نیست") & setButton(true)
+      );
   }
-  // useEffect(() => {
-  //   console.log(phone);
-  // }, [phone]);
 
   function handleClick(message) {
     if (
@@ -36,10 +34,12 @@ function RegisterPhone() {
       "کد یک بار مصرف به شماره شما ارسال شد , لطفا آن را وارد نمائید"
     ) {
       setButton(false);
+      timerOTPstart();
     } else {
       console.log("function run but butten still visible");
     }
   }
+  function timerOTPstart() {}
 
   return (
     <div className={`${button === true ? "block" : "hidden"}`}>
