@@ -46,6 +46,5 @@ button {
  
  button:active:before {
   background: #3a0ca3;
-  -webkit-transition: background 0s;
-  transition: background 0s;
+
  }

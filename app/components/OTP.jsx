@@ -14,7 +14,7 @@ function OTP() {
   }
 
   return (
-    <div className="">
+    <div className="hidden">
       <OtpInput
         value={otp}
         onChange={setOtp}
