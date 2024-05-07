@@ -12,6 +12,7 @@ function RegisterPhone() {
   const [otp, setOtp] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [token, setToken] = useState("");
+  const [id, setId] = useState("");
 
   function AxiosPhone() {
     setButtonPhone(false);
@@ -69,22 +70,35 @@ function RegisterPhone() {
   function handleButtonOtp(message) {
     if (message === "اعتبار سنجی کد یک بار مصرف با موفقیت انجام شد") {
       setButtonOtp(false);
-      setShowForm(true);
-      
       AxiosJwt();
-      
     }
   }
-
-  // یه چیزی رو جا انداختی 
+  // یه چیزی رو جا انداختی
   function AxiosJwt(token) {
-    console.log(token)
-    axios.get("http://192.168.8.100:4003/customer/info", {
-      headers:{
-        Accept: 'Application/json',
-        Authorization: `Bearer ${token}`
-      }
-    }).then((res)=>console.log(res)).catch((err)=>console.log(err))
+    setToken(token);
+    axios
+      .get("http://192.168.8.100:4003/customer/info", {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      })
+      .then(
+        (res) =>
+          console.log(res) &
+          alert("ورود موفقیت آمیز بود") &
+          console.log(res.data.customer.id) &
+          setId(res.data.customer.id) &
+          registerOrNot(res.data.customer.email) &
+          console.log(res.data.customer.email)
+      )
+      .catch((err) => console.log(err));
+  }
+  function registerOrNot(email) {
+    if (email === true) {
+      alert("کاربر قبلا ثبت نام کرده است ");
+    } else {
+      setShowForm(true);
+    }
   }
 
   return (
@@ -106,7 +120,6 @@ function RegisterPhone() {
           submit
         </button>
       </from>
-
       <div
         className={`flex flex-col justify-center items-center ${
           buttonOtp === true ? "block" : "hidden"
@@ -121,7 +134,6 @@ function RegisterPhone() {
         />
         <button onClick={AxiosOTP}>submit</button>
       </div>
-
       <div
         className={`flex flex-col justify-center items-center ${
           showForm === true ? "block" : "hidden"
