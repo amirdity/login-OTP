@@ -1,18 +1,28 @@
 "use client";
 import axios from "axios";
 import React, { useState } from "react";
-import PhoneInput from "react-phone-input-2";
-import OtpInput from "react-otp-input";
 import "react-phone-input-2/lib/style.css";
 import "./RegisterPhone.css";
+import MobileInput from "../features/MobileInput";
+import OTPInput from "../features/OTPInput";
+import RegisterForm from "../features/RegisterForm";
 function RegisterPhone() {
+  //---------------- MOBILE INPUT-------------------
   const [phone, setPhone] = useState("");
   const [buttonPhone, setButtonPhone] = useState(true);
+  // -------------------OTP INPUT-----------------------
   const [buttonOtp, setButtonOtp] = useState(false);
   const [otp, setOtp] = useState("");
+  //--------------------JWT----------------------------
   const [showForm, setShowForm] = useState(false);
   const [token, setToken] = useState("");
+  // ---------------------FORM------------------------------
   const [id, setId] = useState("");
+  const [name, setName] = useState("");
+  const [birthDate, setBirthDate] = useState("");
+  const [gender, setGender] = useState("");
+  const [email, setEmail] = useState("");
+  const [landline, setLandline] = useState("");
   function AxiosPhone() {
     setButtonPhone(false);
     const sendOtpUrl = "http://192.168.8.101:4003/auth/login-send-otp";
@@ -70,7 +80,6 @@ function RegisterPhone() {
       AxiosJwt();
     }
   }
-  // یه چیزی رو جا انداختی
   function AxiosJwt(token) {
     setToken(token);
     axios
@@ -97,41 +106,44 @@ function RegisterPhone() {
       setShowForm(true);
     }
   }
+  function AxiosRegisterForm() {
+    const api = {
+      customer_id: `${id}`,
+      full_name: `${name}`,
+      birth_data: `${birthDate}`,
+      gender: [`${gender}`],
+      email: `${email}`,
+      landline: `${landline}`,
+    };
+    axios
+      .post("http://192.168.8.101:4003/customer/info", api, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  }
   return (
     <div>
       {buttonPhone && (
-        <from className="flex flex-col justify-center items-center">
-          <PhoneInput
-            country={"ir"}
-            value={phone}
-            onChange={setPhone}
-            autoFormat={true}
-            required
-            onlyCountries={["ir"]}
-          />
-          <button
-            type="submit"
-            className="dark:text-white"
-            onClick={AxiosPhone}
-          >
-            submit
-          </button>
-        </from>
+        <MobileInput
+          setPhone={setPhone}
+          phone={phone}
+          AxiosPhone={AxiosPhone}
+        />
       )}
-      {buttonOtp && (
-        <div className="flex flex-col justify-center items-center">
-          <OtpInput
-            value={otp}
-            onChange={setOtp}
-            numInputs={6}
-            renderSeparator={<span> &nbsp; </span>}
-            renderInput={(props) => <input {...props} />}
-          />
-          <button onClick={AxiosOTP}>submit</button>
-        </div>
-      )}
+      {buttonOtp && <OTPInput otp={otp} setOtp={setOtp} AxiosOTP={AxiosOTP} />}
       {showForm && (
-        <div className="flex flex-col justify-center items-center">form</div>
+        <RegisterForm
+          setId={setId}
+          setName={setName}
+          setBirthDate={setBirthDate}
+          setGender={setGender}
+          setEmail={setEmail}
+          setLandline={setLandline}
+          AxiosRegisterForm={AxiosRegisterForm}
+        />
       )}
     </div>
   );

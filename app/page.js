@@ -5,13 +5,8 @@ import { useState } from "react";
 import { BsShieldLockFill } from "react-icons/bs";
 import "./globals.css";
 import RegisterPhone from "./components/RegisterPhone/RegisterPhone";
-import OTP from "./components/OTP";
 export default function Home() {
   const [isDarkMode, setDarkMode] = useState(false);
-  const [phone, setPhone] = useState("");
-  const toggleDarkMode = () => {
-    setDarkMode(!isDarkMode);
-  };
   return (
     <div className={`${isDarkMode === true ? "dark" : "light"}`}>
       <div className=" w-screen h-screen flex justify-center items-center dark:bg-green-950 bg-day dark:bg-night bg-center bg-cover ">
@@ -19,7 +14,7 @@ export default function Home() {
           <DarkModeSwitch
             style={{ marginBottom: "2rem" }}
             checked={isDarkMode}
-            onChange={toggleDarkMode}
+            onChange={setDarkMode}
             size={120}
           />
           <div className="flex justify-center flex-col">
@@ -32,9 +27,6 @@ export default function Home() {
             </p>
             <div className="ml-10 m-10">
               <RegisterPhone />
-            </div>
-            <div className="ml-[130px] border-rose-950 ">
-              <OTP />
             </div>
           </div>
         </div>
