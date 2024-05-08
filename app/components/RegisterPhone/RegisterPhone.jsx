@@ -13,10 +13,9 @@ function RegisterPhone() {
   const [showForm, setShowForm] = useState(false);
   const [token, setToken] = useState("");
   const [id, setId] = useState("");
-
   function AxiosPhone() {
     setButtonPhone(false);
-    const sendOtpUrl = "http://192.168.8.100:4003/auth/login-send-otp";
+    const sendOtpUrl = "http://192.168.8.101:4003/auth/login-send-otp";
     const api = { mobile: `+${phone}` };
     console.log(phone);
     console.log(api);
@@ -35,7 +34,6 @@ function RegisterPhone() {
           setButtonPhone(true)
       );
   }
-
   function handleClick(message) {
     if (
       message ===
@@ -47,9 +45,8 @@ function RegisterPhone() {
       console.log("function run but butten still visible");
     }
   }
-
   function AxiosOTP() {
-    const verifyOTP = "http://192.168.8.100:4003/auth/login-verify-otp";
+    const verifyOTP = "http://192.168.8.101:4003/auth/login-verify-otp";
     const api = { mobile: `+${phone}`, otp_code: `${otp}` };
     console.log(phone);
     console.log(otp);
@@ -77,7 +74,7 @@ function RegisterPhone() {
   function AxiosJwt(token) {
     setToken(token);
     axios
-      .get("http://192.168.8.100:4003/customer/info", {
+      .get("http://192.168.8.101:4003/customer/info", {
         headers: {
           authorization: `Bearer ${token}`,
         },
@@ -100,49 +97,43 @@ function RegisterPhone() {
       setShowForm(true);
     }
   }
-
   return (
     <div>
-      <from
-        className={`flex flex-col justify-center items-center ${
-          buttonPhone === true ? "block" : "hidden"
-        }`}
-      >
-        <PhoneInput
-          country={"ir"}
-          value={phone}
-          onChange={setPhone}
-          autoFormat={true}
-          required
-          onlyCountries={["ir"]}
-        />
-        <button type="submit" className="dark:text-white" onClick={AxiosPhone}>
-          submit
-        </button>
-      </from>
-      <div
-        className={`flex flex-col justify-center items-center ${
-          buttonOtp === true ? "block" : "hidden"
-        }`}
-      >
-        <OtpInput
-          value={otp}
-          onChange={setOtp}
-          numInputs={6}
-          renderSeparator={<span> &nbsp; </span>}
-          renderInput={(props) => <input {...props} />}
-        />
-        <button onClick={AxiosOTP}>submit</button>
-      </div>
-      <div
-        className={`flex flex-col justify-center items-center ${
-          showForm === true ? "block" : "hidden"
-        }`}
-      >
-        form
-      </div>
+      {buttonPhone && (
+        <from className="flex flex-col justify-center items-center">
+          <PhoneInput
+            country={"ir"}
+            value={phone}
+            onChange={setPhone}
+            autoFormat={true}
+            required
+            onlyCountries={["ir"]}
+          />
+          <button
+            type="submit"
+            className="dark:text-white"
+            onClick={AxiosPhone}
+          >
+            submit
+          </button>
+        </from>
+      )}
+      {buttonOtp && (
+        <div className="flex flex-col justify-center items-center">
+          <OtpInput
+            value={otp}
+            onChange={setOtp}
+            numInputs={6}
+            renderSeparator={<span> &nbsp; </span>}
+            renderInput={(props) => <input {...props} />}
+          />
+          <button onClick={AxiosOTP}>submit</button>
+        </div>
+      )}
+      {showForm && (
+        <div className="flex flex-col justify-center items-center">form</div>
+      )}
     </div>
   );
 }
-
 export default RegisterPhone;
