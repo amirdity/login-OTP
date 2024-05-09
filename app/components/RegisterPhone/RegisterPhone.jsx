@@ -86,15 +86,15 @@ function RegisterPhone() {
           console.log(token) &
           setId(res.data.customer.id) &
           console.log(res) &
-          registerOrNot(res.data.customer.email)
+          registerOrNot(res.data.customer.email, res.data.customer.full_name)
       )
       .catch((err) => console.log(err));
   }
-  function registerOrNot(email) {
+  function registerOrNot(email, full_name) {
     if (email === null) {
       setShowForm(true);
     } else {
-      alert("کاربر قبلا ثبت نام کرده است ");
+      alert(` ${full_name} عزیز خوش آمدید `);
     }
   }
   function AxiosRegisterForm() {
