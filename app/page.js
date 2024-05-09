@@ -5,6 +5,7 @@ import { useState } from "react";
 import { BsShieldLockFill } from "react-icons/bs";
 import "./globals.css";
 import RegisterPhone from "./components/RegisterPhone/RegisterPhone";
+import RegisterForm from "./components/features/form/RegisterForm";
 export default function Home() {
   const [isDarkMode, setDarkMode] = useState(false);
   return (
@@ -27,6 +28,7 @@ export default function Home() {
             </p>
             <div className="ml-10 m-10">
               <RegisterPhone />
+              <RegisterForm/>
             </div>
           </div>
         </div>
