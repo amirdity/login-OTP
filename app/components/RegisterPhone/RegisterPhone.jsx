@@ -1,11 +1,12 @@
 "use client";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import "react-phone-input-2/lib/style.css";
 import "./RegisterPhone.css";
 import MobileInput from "../features/MobileInput";
 import OTPInput from "../features/OTPInput";
-import RegisterForm from "../features/RegisterForm";
+import RegisterForm from "../features/form/RegisterForm";
+import Cookies from "js-cookie";
 function RegisterPhone() {
   //---------------- MOBILE INPUT-------------------
   const [phone, setPhone] = useState("");
@@ -15,7 +16,7 @@ function RegisterPhone() {
   const [otp, setOtp] = useState("");
   //--------------------JWT----------------------------
   const [showForm, setShowForm] = useState(false);
-  const [token, setToken] = useState("");
+  const token = useRef("");
   // ---------------------FORM------------------------------
   const [id, setId] = useState("");
   const [name, setName] = useState("");
@@ -27,20 +28,15 @@ function RegisterPhone() {
     setButtonPhone(false);
     const sendOtpUrl = "http://192.168.8.101:4003/auth/login-send-otp";
     const api = { mobile: `+${phone}` };
-    console.log(phone);
-    console.log(api);
     axios
       .post(sendOtpUrl, api)
       .then((res) => {
-        console.log(res) &
-          alert(res.data.message) &
-          console.log(res.data.message) &
-          handleClick(res.data.message);
+        alert(res.data.message) & handleClick(res.data.message);
       })
       .catch(
         (err) =>
           console.log(err) &
-          alert("شماره مبایل معتبر نیست") &
+          alert("در حال حاضر سرور از دسترس خارج شده ") &
           setButtonPhone(true)
       );
   }
@@ -51,24 +47,20 @@ function RegisterPhone() {
     ) {
       setButtonPhone(false);
       setButtonOtp(true);
-    } else {
-      console.log("function run but butten still visible");
     }
   }
   function AxiosOTP() {
     const verifyOTP = "http://192.168.8.101:4003/auth/login-verify-otp";
     const api = { mobile: `+${phone}`, otp_code: `${otp}` };
-    console.log(phone);
-    console.log(otp);
-    console.log(api);
     axios
       .post(verifyOTP, api)
       .then(
         (res) =>
-          console.log(res) &
           alert(res.data.message) &
-          setToken(res.data.access_token.access_token) &
-          console.log(res.data.access_token.access_token) &
+          Cookies.set("token", res.data.access_token.access_token, {
+            expires: 7,
+            secure: true,
+          }) &
           AxiosJwt(res.data.access_token.access_token) &
           handleButtonOtp(res.data.message)
       )
@@ -77,11 +69,11 @@ function RegisterPhone() {
   function handleButtonOtp(message) {
     if (message === "اعتبار سنجی کد یک بار مصرف با موفقیت انجام شد") {
       setButtonOtp(false);
-      AxiosJwt();
     }
   }
-  function AxiosJwt(token) {
-    setToken(token);
+  function AxiosJwt() {
+    const token = Cookies.get("token");
+    console.log(`Bearer ${token}`);
     axios
       .get("http://192.168.8.101:4003/customer/info", {
         headers: {
@@ -90,38 +82,38 @@ function RegisterPhone() {
       })
       .then(
         (res) =>
-          console.log(res) &
           alert("ورود موفقیت آمیز بود") &
-          console.log(res.data.customer.id) &
+          console.log(token) &
           setId(res.data.customer.id) &
-          registerOrNot(res.data.customer.email) &
-          console.log(res.data.customer.email)
+          console.log(res) &
+          registerOrNot(res.data.customer.email)
       )
       .catch((err) => console.log(err));
   }
   function registerOrNot(email) {
-    if (email === true) {
-      alert("کاربر قبلا ثبت نام کرده است ");
-    } else {
+    if (email === null) {
       setShowForm(true);
+    } else {
+      alert("کاربر قبلا ثبت نام کرده است ");
     }
   }
   function AxiosRegisterForm() {
+    const token = Cookies.get("token");
     const api = {
       customer_id: `${id}`,
       full_name: `${name}`,
       birth_data: `${birthDate}`,
-      gender: [`${gender}`],
+      gender: `${gender}`,
       email: `${email}`,
       landline: `${landline}`,
     };
     axios
-      .post("http://192.168.8.101:4003/customer/info", api, {
+      .post("http://192.168.8.101:4003/customer/completion-info", api, {
         headers: {
           authorization: `Bearer ${token}`,
         },
       })
-      .then((res) => console.log(res))
+      .then((res) => console.log(res) & alert(res.data.message))
       .catch((err) => console.log(err));
   }
   return (
@@ -136,12 +128,16 @@ function RegisterPhone() {
       {buttonOtp && <OTPInput otp={otp} setOtp={setOtp} AxiosOTP={AxiosOTP} />}
       {showForm && (
         <RegisterForm
-          setId={setId}
           setName={setName}
+          name={name}
           setBirthDate={setBirthDate}
+          birthDate={birthDate}
           setGender={setGender}
+          gender={gender}
           setEmail={setEmail}
+          email={email}
           setLandline={setLandline}
+          landline={landline}
           AxiosRegisterForm={AxiosRegisterForm}
         />
       )}
