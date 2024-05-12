@@ -1,29 +1,28 @@
 "use client";
 import axios from "axios";
 import React, { useState } from "react";
-import "react-phone-input-2/lib/style.css";
 import Cookies from "js-cookie";
-// ------------CONTEXT API MOBILE-------------------
+// ------------CONTEXT API MOBILE-------------------//
 import { createContext } from "react";
 import ContextMobile from "../context/ContextMobile";
 export const MobileContext = createContext();
-// ------------CONTEXT API OTP-------------------
+// ------------CONTEXT API OTP-------------------//
 export const OtpContext = createContext();
 import ContextOtp from "../context/ContextOtp";
-// ------------CONTEXT API FORM-------------------
+// ------------CONTEXT API FORM-------------------//
 export const FormContext = createContext();
 import ContextForm from "../context/ContextForm";
 function RegisterPhone() {
-  //---------------- MOBILE INPUT-------------------
+  //---------------- MOBILE INPUT-------------------//
   const [phone, setPhone] = useState("");
-  const [buttonPhone, setButtonPhone] = useState(true);
+  const [buttonPhone, setButtonPhone] = useState(false);
   const objectMobile = {
     setPhone,
     phone: phone,
     AxiosPhone,
     buttonPhone,
   };
-  // -------------------OTP INPUT-----------------------
+  // -------------------OTP INPUT-----------------------//
   const [buttonOtp, setButtonOtp] = useState(false);
   const [otp, setOtp] = useState("");
   const objectOtp = {
@@ -32,9 +31,9 @@ function RegisterPhone() {
     setOtp,
     AxiosOTP,
   };
-  //--------------------JWT----------------------------
-  const [showForm, setShowForm] = useState(false);
-  // ---------------------FORM------------------------------
+  //--------------------JWT-------------------------//
+  const [showForm, setShowForm] = useState(true);
+  // ---------------------FORM-----------------------//
   const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [birthDate, setBirthDate] = useState("");
@@ -149,7 +148,7 @@ function RegisterPhone() {
   //     .catch((err) => console.log(err));
   // }
   return (
-    <div>
+    <div className="">
       <MobileContext.Provider value={objectMobile}>
         <ContextMobile objectMobile={objectMobile} />
       </MobileContext.Provider>

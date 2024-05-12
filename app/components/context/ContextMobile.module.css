@@ -17,7 +17,6 @@
   font-weight: 500;
   color: var(--color);
 }
-
 .button:before {
   content: "";
   position: absolute;
@@ -27,23 +26,19 @@
   width: 200px;
   border-radius: 50%;
 }
-
 .button:hover {
   color: #fff;
 }
-
 .button:before {
   top: 100%;
   left: 100%;
   -webkit-transition: all 0.7s;
   transition: all 0.7s;
 }
-
 .button:hover:before {
   top: -30px;
   left: -30px;
 }
-
 .button:active:before {
   background: #3a0ca3;
 }

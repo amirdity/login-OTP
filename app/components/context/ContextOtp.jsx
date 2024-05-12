@@ -27,5 +27,4 @@ function ContextOtp() {
     </>
   );
 }
-
 export default ContextOtp;

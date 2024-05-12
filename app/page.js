@@ -9,8 +9,8 @@ export default function Home() {
   const [isDarkMode, setDarkMode] = useState(false);
   return (
     <div className={`${isDarkMode && "dark"}`}>
-      <div className=" w-screen h-screen flex justify-center items-center bg-day dark:bg-night bg-center bg-cover ">
-        <div className="flex justify-center items-center flex-col backdrop-blur backdrop-brightness-125 p-10 rounded-3xl bg-white/30 dark:bg-white/5 ">
+      <div className=" w-screen h-screen flex justify-center items-center bg-day dark:bg-night bg-center bg-cover">
+        <div className="flex justify-center items-center flex-col backdrop-blur backdrop-brightness-125 p-10 rounded-3xl bg-white/30 dark:bg-white/5">
           <DarkModeSwitch
             style={{ marginBottom: "2rem" }}
             checked={isDarkMode}

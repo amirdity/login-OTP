@@ -1,0 +1,8 @@
+span {
+  padding: 3px;
+  color: red;
+  display: none;
+}
+input:invalid ~ span{
+  display: block;
+}
