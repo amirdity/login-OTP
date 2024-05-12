@@ -2,9 +2,6 @@
 import axios from "axios";
 import React, { useState } from "react";
 import "react-phone-input-2/lib/style.css";
-// import MobileInput from "../features/MobileInput";
-// import OTPInput from "../features/OTPInput";
-// import RegisterForm from "../features/form/RegisterForm";
 import Cookies from "js-cookie";
 // ------------CONTEXT API MOBILE-------------------
 import { createContext } from "react";
@@ -45,6 +42,7 @@ function RegisterPhone() {
   const [email, setEmail] = useState("");
   const [landline, setLandline] = useState("");
   const objectForm = {
+    id,
     setName,
     name,
     setBirthDate,
@@ -55,7 +53,7 @@ function RegisterPhone() {
     email,
     setLandline,
     landline,
-    AxiosRegisterForm,
+    // AxiosRegisterForm,
     showForm,
   };
   function AxiosPhone() {
@@ -131,55 +129,36 @@ function RegisterPhone() {
       alert(` ${full_name} عزیز خوش آمدید `);
     }
   }
-  function AxiosRegisterForm() {
-    const token = Cookies.get("token");
-    const api = {
-      customer_id: `${id}`,
-      full_name: `${name}`,
-      birth_data: `${birthDate}`,
-      gender: `${gender}`,
-      email: `${email}`,
-      landline: `${landline}`,
-    };
-    axios
-      .post("http://192.168.8.101:4003/customer/completion-info", api, {
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => console.log(res) & alert(res.data.message))
-      .catch((err) => console.log(err));
-  }
+  // function AxiosRegisterForm() {
+  //   const token = Cookies.get("token");
+  //   const api = {
+  //     customer_id: `${id}`,
+  //     full_name: `${name}`,
+  //     birth_data: `${birthDate}`,
+  //     gender: `${gender}`,
+  //     email: `${email}`,
+  //     landline: `${landline}`,
+  //   };
+  //   axios
+  //     .post("http://192.168.8.101:4003/customer/completion-info", api, {
+  //       headers: {
+  //         authorization: `Bearer ${token}`,
+  //       },
+  //     })
+  //     .then((res) => console.log(res) & alert(res.data.message))
+  //     .catch((err) => console.log(err));
+  // }
   return (
     <div>
       <MobileContext.Provider value={objectMobile}>
         <ContextMobile objectMobile={objectMobile} />
       </MobileContext.Provider>
-
       <OtpContext.Provider value={objectOtp}>
         <ContextOtp objectOtp={objectOtp} />
       </OtpContext.Provider>
-      {/* buttonOtp && 
-      {<OTPInput otp={otp} setOtp={setOtp} AxiosOTP={AxiosOTP} />} */}
       <FormContext.Provider value={objectForm}>
         <ContextForm objectForm={objectForm} />
       </FormContext.Provider>
-
-      {/* {showForm && (
-        <RegisterForm
-          setName={setName}
-          name={name}
-          setBirthDate={setBirthDate}
-          birthDate={birthDate}
-          setGender={setGender}
-          gender={gender}
-          setEmail={setEmail}
-          email={email}
-          setLandline={setLandline}
-          landline={landline}
-          AxiosRegisterForm={AxiosRegisterForm}
-        />
-      )} */}
     </div>
   );
 }
