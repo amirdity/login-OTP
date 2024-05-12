@@ -2,9 +2,9 @@ import React, { useContext } from "react";
 import { MobileContext } from "../LOGIN/RegisterPhone";
 import PhoneInput from "react-phone-input-2";
 import classes from "./ContextMobile.module.css";
+import "react-phone-input-2/lib/style.css";
 function ContextMobile() {
   const objectMobile = useContext(MobileContext);
-
   return (
     <div>
       {objectMobile.buttonPhone && (
@@ -31,5 +31,4 @@ function ContextMobile() {
     </div>
   );
 }
-
 export default ContextMobile;

@@ -15,5 +15,4 @@ function DarkMode() {
     </div>
   );
 }
-
 export default DarkMode;
