@@ -15,7 +15,7 @@ import ContextForm from "../context/ContextForm";
 function RegisterPhone() {
   //---------------- MOBILE INPUT-------------------//
   const [phone, setPhone] = useState("");
-  const [buttonPhone, setButtonPhone] = useState(false);
+  const [buttonPhone, setButtonPhone] = useState(true);
   const objectMobile = {
     setPhone,
     phone: phone,
@@ -32,7 +32,7 @@ function RegisterPhone() {
     AxiosOTP,
   };
   //--------------------JWT-------------------------//
-  const [showForm, setShowForm] = useState(true);
+  const [showForm, setShowForm] = useState(false);
   // ---------------------FORM-----------------------//
   const [id, setId] = useState("");
   const [name, setName] = useState("");
