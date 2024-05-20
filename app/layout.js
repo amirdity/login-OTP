@@ -1,7 +1,9 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Provider } from "react-redux";
-// import {store} from "./components/redux/store"
+import localFont from 'next/font/local'
+ 
+// Font files can be colocated inside of `pages`
+const myFont = localFont({ src: './font/Qs_Iranyekan light.ttf' })
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -12,7 +14,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={myFont.className}>{children}</body>
     </html>
   );
 }
