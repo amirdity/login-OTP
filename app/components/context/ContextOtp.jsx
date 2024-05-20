@@ -13,7 +13,7 @@ function ContextOtp() {
             value={objectOtp.otp}
             onChange={objectOtp.setOtp}
             numInputs={6}
-            renderSeparator={<span> &nbsp; </span>}
+            renderSeparator={<span> &nbsp; &nbsp;</span>}
             renderInput={(props) => <input {...props} />}
           />
           <button
