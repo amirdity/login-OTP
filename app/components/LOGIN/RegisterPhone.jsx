@@ -57,7 +57,7 @@ function RegisterPhone() {
   };
   function AxiosPhone() {
     setButtonPhone(false);
-    const sendOtpUrl = "http://192.168.8.103:4003/auth/login-send-otp";
+    const sendOtpUrl = "http://pasazh.mrphpinfo.ir/auth/login-send-otp";
     const api = { mobile: `+${phone}` };
     axios
       .post(sendOtpUrl, api)
@@ -81,7 +81,7 @@ function RegisterPhone() {
     }
   }
   function AxiosOTP() {
-    const verifyOTP = "http://192.168.8.103:4003/auth/login-verify-otp";
+    const verifyOTP = "http://pasazh.mrphpinfo.ir/auth/login-verify-otp";
     const api = { mobile: `+${phone}`, otp_code: `${otp}` };
     axios
       .post(verifyOTP, api)
