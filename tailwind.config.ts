@@ -9,8 +9,8 @@ const config: Config = {
   theme: {
     extend: {
       backgroundImage: {
-        day: "url('../public/day.jpg')",
-        night: "url('../public/night.jpg')",
+        day: "url('../public/day.webp')",
+        night: "url('../public/night.webp')",
       },
     },
   },
